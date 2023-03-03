@@ -43,7 +43,7 @@ public abstract class AnnotationExtendedCommand {
             Class<?> paramClass = parameter.getType();
             ContextResolver<?> contextResolver = ContextResolverRegistry.getResolver(paramClass);
             if (contextResolver == null) {
-                ChatUtils.sendMessage(sender, "<error>There is no context resolver for " + paramClass.getSimpleName());
+                sender.sendMessage(ChatUtils.color("&cThere is no context resolver for " + paramClass.getSimpleName()));
                 return true;
             }
 
@@ -58,7 +58,7 @@ public abstract class AnnotationExtendedCommand {
 
                 Object resolvedObject = contextResolver.resolve(sender, isMainCommand ? args[i - 1] : args[i]);
                 if (resolvedObject == null) {
-                    ChatUtils.sendMessage(sender, "<error>Could not resolve parameter " + parameter.getName() + " of type " + paramClass.getSimpleName() + ".");
+                    sender.sendMessage(ChatUtils.color("&cCould not resolve parameter " + parameter.getName() + " of type " + paramClass.getSimpleName() + "."));
                     return true;
                 }
 
@@ -72,7 +72,7 @@ public abstract class AnnotationExtendedCommand {
             return true;
         } catch (Exception exception) {
             exception.printStackTrace();
-            ChatUtils.sendMessage(sender, "<error>Something went wrong while executing this subcommand: " + exception.getMessage());
+            sender.sendMessage(ChatUtils.color("&cSomething went wrong while executing this subcommand: " + exception.getMessage()));
             return true;
         }
     }

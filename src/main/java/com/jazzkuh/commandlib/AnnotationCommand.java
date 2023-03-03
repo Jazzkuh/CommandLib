@@ -51,7 +51,7 @@ public abstract class AnnotationCommand implements TabExecutor {
         if (cmd != null) {
             if (mainCommand.getPermission() != null) {
                 cmd.setPermission(mainCommand.getPermission());
-                cmd.permissionMessage(ChatUtils.color("<error>You do not have permission to use this command."));
+                cmd.setPermissionMessage(ChatUtils.color("&cYou do not have permission to use this command."));
             }
             cmd.setExecutor(this);
         }
@@ -67,7 +67,7 @@ public abstract class AnnotationCommand implements TabExecutor {
         for (AnnotationSubCommand subCommand : subCommands) {
             if (!args[0].equalsIgnoreCase(subCommand.getName()) && !subCommand.getAliases().contains(args[0].toLowerCase())) continue;
             if (subCommand.getPermission() != null && !sender.hasPermission(subCommand.getPermission())) {
-                sender.sendMessage(ChatUtils.color("<error>You do not have permission to use this command."));
+                sender.sendMessage(ChatUtils.color("&cYou do not have permission to use this command."));
                 return true;
             }
 
@@ -86,7 +86,7 @@ public abstract class AnnotationCommand implements TabExecutor {
 
     private void execute(CommandSender sender, String[] args) {
         if (mainCommand.getPermission() != null && !sender.hasPermission(mainCommand.getPermission())) {
-            sender.sendMessage(ChatUtils.color("<error>You do not have permission to use this command."));
+            sender.sendMessage(ChatUtils.color("&cYou do not have permission to use this command."));
             return;
         }
 
@@ -120,13 +120,13 @@ public abstract class AnnotationCommand implements TabExecutor {
 
     protected void sendNotEnoughArguments(CommandSender sender) {
         if (mainCommand.getUsage() != null && mainCommand.getUsage().length() > 0) {
-            ChatUtils.sendMessage(sender, "<secondary>/" + this.commandName + mainCommand.getCommandArgument().getArguments() + "<dark_gray> - <gray>" + mainCommand.getCommandArgument().getDescription());
+            sender.sendMessage(ChatUtils.color("&6/" + this.commandName + mainCommand.getCommandArgument().getArguments() + "&8 - &7" + mainCommand.getCommandArgument().getDescription()));
         }
 
         for (AnnotationSubCommand subCommand : this.subCommands) {
             if (subCommand.getPermission() == null || sender.hasPermission(subCommand.getPermission())) {
                 CommandArgument commandArgument = subCommand.getCommandArgument();
-                ChatUtils.sendMessage(sender, "<secondary>/" + this.commandName + " " + commandArgument.getArguments() + "<dark_gray> - <gray>" + commandArgument.getDescription());
+                sender.sendMessage(ChatUtils.color("&6/" + this.commandName + " " + commandArgument.getArguments() + "&8 - &7" + commandArgument.getDescription()));
             }
         }
     }
